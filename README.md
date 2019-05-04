@@ -4,6 +4,12 @@
 
 
 * * *
+## TEAM NOTICE
+- USE OF ANACONDA3 : 1
+- PYTHON VERSION: 3.6.8
+- OPENCV VERSION: 3.4.4.19
+- OPENCV CONTRIBUTION VERSION: 3.4.4.19
+* * *
 
 
 ## Anti-drift team board
