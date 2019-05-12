@@ -1,8 +1,4 @@
-"""
-    Description: Modified demo version of webcam_demo.py provided from Standford University
-    UpdatedDate: May 7, 2019
-"""
-
+import caffe
 import numpy as np
 import matplotlib.pyplot as plt
 import os.path
@@ -13,15 +9,12 @@ import cv2
 import sys
 import time
 
-
-#sys.path.append('/usr/local/lib/python2.7/site-packages')
-#sys.path.append('/usr/local/lib/python3.6/dist-packages')
+# The path of installed python libraries
 sys.path.append('/home/decuple/anaconda3/site-packages')
 # Make sure that caffe is on the python path:
-#caffe_root = '/SegNet/caffe-segnet/'
 caffe_root = '/usr/local/'
 sys.path.insert(0, caffe_root + 'python')
-import caffe
+
 
 # Import arguments
 parser = argparse.ArgumentParser()
@@ -44,11 +37,11 @@ label_colours = cv2.imread(args.colours).astype(np.uint8)
 cv2.namedWindow("Input")
 cv2.namedWindow("SegNet")
 
-cap = cv2.VideoCapture('rtsp://192.168.100.1/cam1/mpeg4') # Enable data input from the Drone 
-#cap = cv2.VideoCapture(0) # Enables webcam
+cap = cv2.VideoCapture('rtsp://192.168.100.1/cam1/mpeg4')
+# cap = cv2.VideoCapture(0) # Change this to your webcam ID, or file name for your video file
 
 rval = True
-count = 0
+vcount = 0
 
 while rval:
     start = time.time()
@@ -58,45 +51,45 @@ while rval:
         break
 
     end = time.time()
-    print ('%30s' % 'Grabbed camera frame in ', str((end - start)*1000), 'ms')
+    print('%30s' % 'Grabbed camera frame in ', str((end - start) * 1000), 'ms')
 
     start = time.time()
-    frame = cv2.resize(frame, (input_shape[3],input_shape[2]))
-    input_image = frame.transpose((2,0,1))
-    # input_image = input_image[(2,1,0),:,:] # May be required, if you do not open your data with opencv
+    frame = cv2.resize(frame, (input_shape[3], input_shape[2]))
+    input_image = frame.transpose((2, 0, 1))
+    # input_image = input_image[(2,1,0),:,:]
+    # May be required, if you do not open your data with opencv
     input_image = np.asarray([input_image])
     end = time.time()
-    print ('%30s' % 'Resized image in ', str((end - start)*1000), 'ms')
+    print('%30s' % 'Resized image in ', str((end - start) * 1000), 'ms')
 
     start = time.time()
     out = net.forward_all(data=input_image)
     end = time.time()
-    print ('%30s' % 'Executed SegNet in ', str((end - start)*1000), 'ms')
+    print('%30s' % 'Executed SegNet in ', str((end - start) * 1000), 'ms')
 
     start = time.time()
     segmentation_ind = np.squeeze(net.blobs['argmax'].data)
-    segmentation_ind_3ch = np.resize(segmentation_ind,(3,input_shape[2],input_shape[3]))
-    segmentation_ind_3ch = segmentation_ind_3ch.transpose(1,2,0).astype(np.uint8)
+    segmentation_ind_3ch = np.resize(segmentation_ind, (3, input_shape[2], input_shape[3]))
+    segmentation_ind_3ch = segmentation_ind_3ch.transpose(1, 2, 0).astype(np.uint8)
     segmentation_rgb = np.zeros(segmentation_ind_3ch.shape, dtype=np.uint8)
 
-
-    cv2.LUT(segmentation_ind_3ch,label_colours,segmentation_rgb)
-    segmentation_rgb = segmentation_rgb.astype(float)/255
+    cv2.LUT(segmentation_ind_3ch, label_colours, segmentation_rgb)
+    segmentation_rgb = segmentation_rgb.astype(float) / 255
 
     end = time.time()
-    print ('%30s' % 'Processed results in ', str((end - start)*1000), 'ms\n')
+    print('%30s' % 'Processed results in ', str((end - start) * 1000), 'ms\n')
 
     cv2.imshow("Input", frame)
     cv2.imshow("SegNet", segmentation_rgb)
 
     key = cv2.waitKey(1)
-    if key == 27: # exit on ESC
-         break
-    elif key == ord('a') or key == 65: #Need to be fixed
-        description = "/SegNet/screenshots/{0}.bmp".format(count)
-        cv2.imwrite(description, segmentation_rgb)
-        count += 1
+    if key == 27:  # exit on ESC
+        break
+    elif key == ord('q') or key == 65:
+        IMAGE_FILE = "new_image"
+        cv2.imwrite("Segnetimage.png", segmentation_rgb)
+        scipy.misc.toimage(segmentation_rgb, cmin=0.0, cmax=255).save(
+            IMAGE_FILE + '_segnet.png')
 
 cap.release()
 cv2.destroyAllWindows()
-

@@ -12,13 +12,13 @@
 * * *
 
 
-## Anti-drift team board
+## Anti-drift team Board
 
 * * *
 
 
-## Deep-learning team board
-- SegNet resources: 
+## Machine-Learning team Board
+- SegNet resources:
   + Concepts & Understandings
     - https://www.quora.com/What-is-the-SegNet-neural-network-Why-is-it-important
     - https://towardsdatascience.com/review-segnet-semantic-segmentation-e66f2e30fb96
@@ -33,5 +33,12 @@
     - http://5argon.info/portfolio/d/SegnetTrainingGuide.pdf
   + SegNet Speeding Up
     - http://5argon.info/portfolio/d/SegNetSummary.pdf
+
+- Corner Detection & Tracking
+  + Things to resolve
+    - How to get a RGB data from the SegNet Model
+    - How to find out the difference of straight path and curved path
+  + Progress
+    - #Update Soon
 
 * * *
