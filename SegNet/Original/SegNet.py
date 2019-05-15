@@ -47,7 +47,7 @@ while rval:
     start = time.time()
     rval, frame = cap.read()
 
-    if rval == False:
+    if not rval:
         break
 
     end = time.time()
@@ -92,4 +92,5 @@ while rval:
             IMAGE_FILE + '_segnet.png')
 
 cap.release()
+
 cv2.destroyAllWindows()
