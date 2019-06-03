@@ -12,8 +12,8 @@ drone.pair(drone.Nearest)
 
 #This function runs in a thread and constantly gets and outputs data from the
 #opitcal flow sensor
-def Drone_AntiDrift ():
-
+def Drone_AntiDrift():
+    
     state = drone.get_state()
 
     #Start of while loop
@@ -62,3 +62,14 @@ def Drone_AntiDrift ():
         if posistionDisplacementY < 0:
 
             DirectionY = "Down"
+
+
+        print (TotalDisplacement," ",DirectionX," ",DirectionY)
+
+
+while True:
+
+    Drone_AntiDrift()
+
+        
+
