@@ -66,10 +66,7 @@ def Drone_AntiDrift():
 
         print (TotalDisplacement," ",DirectionX," ",DirectionY)
 
-
-while True:
-
-    Drone_AntiDrift()
+Drone_AntiDrift()
 
         
 
