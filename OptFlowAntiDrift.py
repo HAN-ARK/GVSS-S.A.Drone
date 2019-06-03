@@ -17,54 +17,56 @@ def Drone_AntiDrift():
     state = drone.get_state()
 
     #Start of while loop
-    while (state == 'FLIGHT'):
+    while True:
 
         #Initialization of initial position object
         positionInitial = drone.get_opt_flow_position()
 
-        time.sleep(3.0)
+        time.sleep(1.5)
 
         #Initialization of final position object
-        posistionFinal = drone.get_opt_flow_posistion()
+        positionFinal = drone.get_opt_flow_position()
 
         #Horizontal Displacement
-        posistionDisplacementX = poisistionFinal.X - posistionInitial.X
+        positionDisplacementX = positionFinal.X - positionInitial.X
 
         #Vertical Displacment
-        posistionDisplacementY = posistionFinal.Y - posisitionInitial.Y
+        positionDisplacementY = positionFinal.Y - positionInitial.Y
 
-        TotalDisplacementX = posistionDisplacement.X * posistionDisplacement.X
+        TotalDisplacementX = positionDisplacementX * positionDisplacementX
 
-        TotalDisplacementY = posistionDisplacement.Y * posistionDisplacemnet.Y
+        TotalDisplacementY = positionDisplacementY * positionDisplacementY
 
         #The total distance that has been travelled along a diagonal line
         TotalDisplacement = math.sqrt(TotalDisplacementX + TotalDisplacementY)
 
         #Posistive horizontal displacement indicates movement to the right
-        if posistionDisplacementX > 0:
+        if positionDisplacementX > 0:
 
             DirectionX = "Right"
 
         #Negative horizontal displacement indicates movement to the left
-        if posistionDisplacementX < 0:
+        if positionDisplacementX < 0:
 
             DirectionX = "Left"
 
         
         #Positive vertical displacement indicates upwards movement        
-        if posistionDisplacementY > 0:
+        if positionDisplacementY > 0:
 
             DirectionY = "Up"
 
 
         #Negative vertical displacement indicates backwards movement
         #Should only occur if the drone comes to a sudden stop
-        if posistionDisplacementY < 0:
+        if positionDisplacementY < 0:
 
             DirectionY = "Down"
 
 
-        print (TotalDisplacement," ",DirectionX," ",DirectionY)
+        #print (TotalDisplacement," ",DirectionX," ",DirectionY)
+
+        print (DirectionX," ",positionDisplacementX,DirectionY," ",positionDisplacementY)
 
 Drone_AntiDrift()
 
