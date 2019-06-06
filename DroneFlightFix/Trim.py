@@ -10,12 +10,15 @@ def main():
 
     drone.takeoff()
 
-    drone.trim(-10, 0, 0, 0)
+    drone.trim(20, 0, 0, 0)
     print(trim_info.ROLL, trim_info.PITCH, trim_info.YAW, trim_info.THROTTLE)
 
     drone.hover(10)
-    drone.land()
 
+
+    drone.go(Direction.FORWARD, 10)
+
+    drone.land()
     drone.disconnect()
 
 
